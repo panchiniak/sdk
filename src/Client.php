@@ -45,14 +45,8 @@ class Client extends GuzzleClient
         
         $url = $package['url'];
         $path = $destination . '/' . pathinfo(parse_url($url, PHP_URL_PATH), PATHINFO_BASENAME);
-        
-        $fp = fopen($path, 'w+');
-        $ch = curl_init($url);
-        curl_setopt($ch, CURLOPT_FILE, $fp);
-        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-        curl_exec($ch);
-        curl_close($ch);
-        fclose($fp);
+
+        `curl -s -o $path "$url"`;
         
         return ['path' => $path];
     }
